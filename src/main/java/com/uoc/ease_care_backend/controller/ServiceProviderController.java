@@ -1,7 +1,6 @@
 package com.uoc.ease_care_backend.controller;
 
 import com.uoc.ease_care_backend.dto.ServiceProviderDTO;
-import com.uoc.ease_care_backend.entity.ServiceProvider;
 import com.uoc.ease_care_backend.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,4 +24,18 @@ public class ServiceProviderController {
         return providerService.getServiceProviders();
     }
 
+    @GetMapping("/getService/{serviceProviderId}")
+    public ServiceProviderDTO getServiceProvider(@PathVariable int serviceProviderId){
+        return providerService.getServiceProvider(serviceProviderId);
+    }
+
+    @PutMapping("/edit")
+    public boolean editServiceProvider(@RequestBody ServiceProviderDTO serviceProvider){
+        return providerService.editServiceProvider(serviceProvider);
+    }
+
+    @GetMapping("/delete/{serviceProviderId}")
+    public boolean deleteServiceProvider(@PathVariable int serviceProviderId){
+        return providerService.deleteServiceProvider(serviceProviderId);
+    }
 }
