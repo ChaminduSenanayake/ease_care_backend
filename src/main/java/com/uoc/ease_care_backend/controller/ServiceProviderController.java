@@ -25,7 +25,7 @@ public class ServiceProviderController {
     }
 
     @GetMapping("/getService/{serviceProviderId}")
-    public ServiceProviderDTO getServiceProvider(@PathVariable int serviceProviderId){
+    public ServiceProviderDTO getServiceProvider(@PathVariable String serviceProviderId){
         return providerService.getServiceProvider(serviceProviderId);
     }
 
@@ -35,7 +35,7 @@ public class ServiceProviderController {
     }
 
     @GetMapping("/delete/{serviceProviderId}")
-    public boolean deleteServiceProvider(@PathVariable int serviceProviderId){
+    public boolean deleteServiceProvider(@PathVariable String serviceProviderId){
         return providerService.deleteServiceProvider(serviceProviderId);
     }
 }

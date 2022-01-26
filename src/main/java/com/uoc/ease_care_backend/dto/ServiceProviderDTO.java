@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ServiceProviderDTO {
-    private int serviceProviderId;
+    private String serviceProviderId;
     private String serviceProviderName;
     private String hospitalName;
     private String address;
