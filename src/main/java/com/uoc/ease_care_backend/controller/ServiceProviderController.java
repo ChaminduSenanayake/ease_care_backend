@@ -3,13 +3,12 @@ package com.uoc.ease_care_backend.controller;
 import com.uoc.ease_care_backend.dto.ServiceProviderDTO;
 import com.uoc.ease_care_backend.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/service")
+@RequestMapping("/api/v1/serviceProvider")
 @CrossOrigin(origins = "*")
 public class ServiceProviderController {
     @Autowired
@@ -24,7 +23,7 @@ public class ServiceProviderController {
         return providerService.getServiceProviders();
     }
 
-    @GetMapping("/getService/{serviceProviderId}")
+    @GetMapping("/getServiceProvider/{serviceProviderId}")
     public ServiceProviderDTO getServiceProvider(@PathVariable String serviceProviderId){
         return providerService.getServiceProvider(serviceProviderId);
     }
@@ -34,7 +33,7 @@ public class ServiceProviderController {
         return providerService.editServiceProvider(serviceProvider);
     }
 
-    @GetMapping("/delete/{serviceProviderId}")
+    @DeleteMapping("/delete/{serviceProviderId}")
     public boolean deleteServiceProvider(@PathVariable String serviceProviderId){
         return providerService.deleteServiceProvider(serviceProviderId);
     }

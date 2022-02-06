@@ -12,5 +12,10 @@ public class ServiceProviderDTO {
     private String address;
     private String contactNumber;
     private String email;
-    private int registeredDate;
+    private PaymentStatus paymentStatus;
+    private Long registeredDate;
+
+    public enum PaymentStatus{
+        INACTIVE,ACTIVE
+    }
 }
