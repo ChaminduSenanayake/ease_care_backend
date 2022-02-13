@@ -23,7 +23,7 @@ public class AmbulanceService {
     public boolean registerAmbulance(AmbulanceDTO dto) {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         String ambulanceID = String.valueOf(generateID());
-        dto.setServiceProviderId(ambulanceID);
+        dto.setAmbulanceId(ambulanceID);
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(collectionName).document(ambulanceID).set(dto);
         if(getAmbulance(ambulanceID) != null) {
             return true;
@@ -43,7 +43,7 @@ public class AmbulanceService {
         }
         for (QueryDocumentSnapshot document : documents) {
             AmbulanceDTO dto=new AmbulanceDTO();
-            dto.setAmbulanceId(document.get("ambulanceID").toString());
+            dto.setAmbulanceId(document.get("ambulanceId").toString());
             dto.setServiceProviderId(document.get("serviceProviderId").toString());
             dto.setVehicleNumber(document.get("vehicleNumber").toString());
             dto.setDriverName(document.get("driverName").toString());
@@ -51,6 +51,16 @@ public class AmbulanceService {
             dto.setContactNumber(document.get("contactNumber").toString());
             dto.setUserName(document.get("userName").toString());
             ambulances.add(dto);
+        }
+        return ambulances;
+    }
+
+    public List<AmbulanceDTO> getAmbulancesByProvider(String serviceProviderId){
+        List<AmbulanceDTO> ambulances = new ArrayList<>();
+        for (AmbulanceDTO dto : getAmbulances()) {
+            if (dto.getServiceProviderId().equals(serviceProviderId)){
+                ambulances.add(dto);
+            }
         }
         return ambulances;
     }
@@ -65,7 +75,7 @@ public class AmbulanceService {
             document = future.get();
             if(document.exists()) {
                 AmbulanceDTO dto=new AmbulanceDTO();
-                dto.setAmbulanceId(document.get("ambulanceID").toString());
+                dto.setAmbulanceId(document.get("ambulanceId").toString());
                 dto.setServiceProviderId(document.get("serviceProviderId").toString());
                 dto.setVehicleNumber(document.get("vehicleNumber").toString());
                 dto.setDriverName(document.get("driverName").toString());

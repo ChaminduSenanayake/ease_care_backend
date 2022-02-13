@@ -25,6 +25,11 @@ public class AmbulanceController {
         return ambulanceService.getAmbulances();
     }
 
+    @GetMapping("/getAllByProvider/{serviceProviderId}")
+    public List<AmbulanceDTO> getAmbulancesByProvider(@PathVariable String serviceProviderId){
+        return ambulanceService.getAmbulancesByProvider(serviceProviderId);
+    }
+
     @GetMapping("/getAmbulance/{ambulanceId}")
     public AmbulanceDTO getAmbulance(@PathVariable String ambulanceId){
         return ambulanceService.getAmbulance(ambulanceId);
