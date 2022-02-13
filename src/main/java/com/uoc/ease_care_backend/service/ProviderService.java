@@ -40,7 +40,7 @@ public class ProviderService {
         try {
             documents = future.get().getDocuments();
         } catch (InterruptedException  | ExecutionException e) {
-            logger.info("Can not register a new Service Provider");
+            logger.info("Can not get Service Providers");
         }
         for (QueryDocumentSnapshot document : documents) {
             ServiceProviderDTO dto=new ServiceProviderDTO();
