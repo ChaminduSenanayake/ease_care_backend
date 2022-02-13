@@ -25,7 +25,7 @@ public class AmbulanceController {
         return ambulanceService.getAmbulances();
     }
 
-    @GetMapping("/getServiceProvider/{serviceProviderId}")
+    @GetMapping("/getAmbulance/{ambulanceId}")
     public AmbulanceDTO getAmbulance(@PathVariable String ambulanceId){
         return ambulanceService.getAmbulance(ambulanceId);
     }
@@ -35,7 +35,7 @@ public class AmbulanceController {
         return ambulanceService.editAmbulance(ambulance);
     }
 
-    @DeleteMapping("/delete/{serviceProviderId}")
+    @DeleteMapping("/delete/{ambulanceId}")
     public boolean deleteAmbulance(@PathVariable String ambulanceId){
         return ambulanceService.deleteAmbulance(ambulanceId);
     }
