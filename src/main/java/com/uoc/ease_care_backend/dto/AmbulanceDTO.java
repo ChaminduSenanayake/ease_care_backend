@@ -5,12 +5,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AmbulanceDTO {
-    private String ambulanceId;
+    private String userId;
     private String serviceProviderId;
-    private String vehicleNumber;
-    private String driverName;
+    private String email;
+    private String number;
     private String driverNIC;
+    private String name;
     private String contactNumber;
-    private String userName;
+    private String lastSignIn;
     private String password;
+    private String ambulanceCharge;
 }

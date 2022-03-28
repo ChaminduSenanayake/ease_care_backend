@@ -14,6 +14,7 @@ public class ServiceProviderDTO {
     private String email;
     private PaymentStatus paymentStatus;
     private Long registeredDate;
+    private double chargePerKm;
 
     public enum PaymentStatus{
         INACTIVE,ACTIVE

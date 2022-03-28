@@ -52,6 +52,7 @@ public class ProviderService {
             dto.setEmail(document.get("email").toString());
             dto.setPaymentStatus(ServiceProviderDTO.PaymentStatus.valueOf(document.get("paymentStatus").toString()));
             dto.setRegisteredDate(Long.parseLong(document.get("registeredDate").toString()));
+            dto.setChargePerKm(Double.parseDouble(document.get("chargePerKm").toString()));
             serviceProviderDTOS.add(dto);
         }
         return serviceProviderDTOS;
@@ -75,6 +76,7 @@ public class ProviderService {
                 dto.setPaymentStatus(ServiceProviderDTO.PaymentStatus.valueOf(document.get("paymentStatus").toString()));
                 dto.setEmail(document.get("email").toString());
                 dto.setRegisteredDate((Long) document.get("registerdDate"));
+                dto.setChargePerKm(Double.parseDouble(document.get("chargePerKm").toString()));
                 return dto;
             }
         } catch (InterruptedException  | ExecutionException e) {
