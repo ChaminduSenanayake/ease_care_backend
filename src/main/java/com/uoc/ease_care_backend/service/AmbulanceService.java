@@ -64,10 +64,6 @@ public class AmbulanceService {
             dto.setEmail(document.get("email").toString());
             ambulances.add(dto);
         }
-
-
-
-
         return ambulances;
     }
 
