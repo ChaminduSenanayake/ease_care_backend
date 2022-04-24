@@ -12,7 +12,10 @@ public class AmbulanceDTO {
     private String driverNIC;
     private String name;
     private String contactNumber;
-    private String lastSignIn;
+    private String lastPositionTime;
     private String password;
     private String ambulanceCharge;
+    private String isFree;
+    private double latitude;
+    private double longitude;
 }

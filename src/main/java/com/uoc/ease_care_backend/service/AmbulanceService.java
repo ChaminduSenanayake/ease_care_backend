@@ -11,6 +11,7 @@ import com.uoc.ease_care_backend.dto.AmbulanceDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
@@ -24,7 +25,7 @@ public class AmbulanceService {
         UserRecord.CreateRequest req = new UserRecord.CreateRequest();
         req.setEmail(dto.getEmail());
         req.setPassword(dto.getPassword());
-        dto.setLastSignIn("-");
+        dto.setLastPositionTime("-");
         try {
             UserRecord user = FirebaseAuth.getInstance().createUser(req);
             Firestore dbFirestore = FirestoreClient.getFirestore();
@@ -59,8 +60,14 @@ public class AmbulanceService {
             dto.setDriverNIC(document.get("driverNIC").toString());
             dto.setName(document.get("name").toString());
             dto.setContactNumber(document.get("contactNumber").toString());
-            dto.setLastSignIn(document.get("lastSignIn").toString());
+            dto.setLastPositionTime(document.get("lastPositionTime").toString());
             dto.setAmbulanceCharge(document.get("ambulanceCharge").toString());
+            HashMap<String,Object> geopoint= (HashMap<String, Object>) document.get("driverCurrentPosition");
+            GeoPoint point= (GeoPoint) geopoint.get("geopoint");
+            dto.setLatitude(point.getLatitude());
+            dto.setLongitude(point.getLongitude());
+            dto.setLongitude(point.getLongitude());
+            dto.setIsFree(document.get("isFree").toString());
             dto.setEmail(document.get("email").toString());
             ambulances.add(dto);
         }
@@ -93,8 +100,14 @@ public class AmbulanceService {
                 dto.setDriverNIC(document.get("driverNIC").toString());
                 dto.setName(document.get("name").toString());
                 dto.setContactNumber(document.get("contactNumber").toString());
-                dto.setLastSignIn(document.get("lastSignIn").toString());
+                dto.setLastPositionTime(document.get("lastPositionTime").toString());
                 dto.setAmbulanceCharge(document.get("ambulanceCharge").toString());
+                HashMap<String,Object> geopoint= (HashMap<String, Object>) document.get("driverCurrentPosition");
+                GeoPoint point= (GeoPoint) geopoint.get("geopoint");
+                dto.setLatitude(point.getLatitude());
+                dto.setLongitude(point.getLongitude());
+                dto.setLongitude(point.getLongitude());
+                dto.setIsFree(document.get("isFree").toString());
                 dto.setEmail(document.get("email").toString());
                 return dto;
             }

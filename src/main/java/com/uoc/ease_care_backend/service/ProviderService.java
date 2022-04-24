@@ -4,12 +4,9 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.uoc.ease_care_backend.dto.ServiceProviderDTO;
-import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
@@ -41,6 +38,9 @@ public class ProviderService {
             documents = future.get().getDocuments();
         } catch (InterruptedException  | ExecutionException e) {
             logger.info("Can not get Service Providers");
+        }
+        if(documents==null){
+            return null;
         }
         for (QueryDocumentSnapshot document : documents) {
             ServiceProviderDTO dto=new ServiceProviderDTO();
