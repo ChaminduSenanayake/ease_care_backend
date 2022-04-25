@@ -1,6 +1,7 @@
 package com.uoc.ease_care_backend.controller;
 
 import com.uoc.ease_care_backend.dto.AmbulanceDTO;
+import com.uoc.ease_care_backend.dto.AmbulanceRegisterDTO;
 import com.uoc.ease_care_backend.dto.ServiceProviderDTO;
 import com.uoc.ease_care_backend.service.AmbulanceService;
 import com.uoc.ease_care_backend.service.ProviderService;
@@ -16,7 +17,7 @@ public class AmbulanceController {
     @Autowired
     private AmbulanceService ambulanceService;
     @PostMapping("/register")
-    public boolean registerAmbulance(@RequestBody AmbulanceDTO ambulance){
+    public boolean registerAmbulance(@RequestBody AmbulanceRegisterDTO ambulance){
         return ambulanceService.registerAmbulance(ambulance);
     }
 

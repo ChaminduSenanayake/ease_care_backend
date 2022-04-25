@@ -19,7 +19,7 @@ public class ProviderService {
     public boolean registerServiceProvider(ServiceProviderDTO dto) {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         String serviceProviderID = String.valueOf(generateID());
-        dto.setPaymentStatus(ServiceProviderDTO.PaymentStatus.INACTIVE);
+        dto.setPaymentStatus(ServiceProviderDTO.PaymentStatus.ACTIVE);
         dto.setServiceProviderId(serviceProviderID);
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(collectionName).document(serviceProviderID).set(dto);
         if(getServiceProvider(serviceProviderID) != null) {

@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 import com.uoc.ease_care_backend.dto.AmbulanceDTO;
+import com.uoc.ease_care_backend.dto.AmbulanceRegisterDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +22,12 @@ public class AmbulanceService {
     private String collectionName = "Ambulance";
     private Logger logger = Logger.getLogger(String.valueOf(ProviderService.class));
 
-    public boolean registerAmbulance(AmbulanceDTO dto) {
+    public boolean registerAmbulance(AmbulanceRegisterDTO dto) {
         UserRecord.CreateRequest req = new UserRecord.CreateRequest();
         req.setEmail(dto.getEmail());
         req.setPassword(dto.getPassword());
-        dto.setLastPositionTime("-");
+        dto.setStatus("Activate");
+        dto.setFree(true);
         try {
             UserRecord user = FirebaseAuth.getInstance().createUser(req);
             Firestore dbFirestore = FirestoreClient.getFirestore();
@@ -54,21 +56,24 @@ public class AmbulanceService {
         }
         for (QueryDocumentSnapshot document : documents) {
             AmbulanceDTO dto=new AmbulanceDTO();
-            dto.setUserId(document.get("userId").toString());
-            dto.setServiceProviderId(document.get("serviceProviderId").toString());
-            dto.setNumber(document.get("number").toString());
-            dto.setDriverNIC(document.get("driverNIC").toString());
-            dto.setName(document.get("name").toString());
-            dto.setContactNumber(document.get("contactNumber").toString());
-            dto.setLastPositionTime(document.get("lastPositionTime").toString());
-            dto.setAmbulanceCharge(document.get("ambulanceCharge").toString());
+            dto.setUserId(String.valueOf(document.get("userId").toString()));
+            dto.setServiceProviderId(String.valueOf(document.get("serviceProviderId").toString()));
+            dto.setNumber(String.valueOf(document.get("number").toString()));
+            dto.setDriverNIC(String.valueOf(document.get("driverNIC").toString()));
+            dto.setName(String.valueOf(document.get("name").toString()));
+            dto.setContactNumber(String.valueOf(document.get("contactNumber").toString()));
+            dto.setLastPositionTime(String.valueOf(document.get("lastPositionTime")));
+            dto.setAmbulanceCharge(String.valueOf(document.get("ambulanceCharge").toString()));
             HashMap<String,Object> geopoint= (HashMap<String, Object>) document.get("driverCurrentPosition");
-            GeoPoint point= (GeoPoint) geopoint.get("geopoint");
-            dto.setLatitude(point.getLatitude());
-            dto.setLongitude(point.getLongitude());
-            dto.setLongitude(point.getLongitude());
-            dto.setIsFree(document.get("isFree").toString());
-            dto.setEmail(document.get("email").toString());
+            if (geopoint!=null){
+                GeoPoint point= (GeoPoint) geopoint.get("geopoint");
+                if(point!=null){
+                    dto.setLatitude(point.getLatitude());
+                    dto.setLongitude(point.getLongitude());
+                }
+            }
+            dto.setFree(Boolean.parseBoolean(String.valueOf(document.get("isFree"))));
+            dto.setEmail(String.valueOf(document.get("email").toString()));
             ambulances.add(dto);
         }
         return ambulances;
@@ -94,29 +99,30 @@ public class AmbulanceService {
             document = future.get();
             if(document.exists()) {
                 AmbulanceDTO dto=new AmbulanceDTO();
-                dto.setUserId(document.get("userId").toString());
-                dto.setServiceProviderId(document.get("serviceProviderId").toString());
-                dto.setNumber(document.get("number").toString());
-                dto.setDriverNIC(document.get("driverNIC").toString());
-                dto.setName(document.get("name").toString());
-                dto.setContactNumber(document.get("contactNumber").toString());
-                dto.setLastPositionTime(document.get("lastPositionTime").toString());
-                dto.setAmbulanceCharge(document.get("ambulanceCharge").toString());
+                dto.setUserId(String.valueOf(document.get("userId").toString()));
+                dto.setServiceProviderId(String.valueOf(document.get("serviceProviderId").toString()));
+                dto.setNumber(String.valueOf(document.get("number").toString()));
+                dto.setDriverNIC(String.valueOf(document.get("driverNIC").toString()));
+                dto.setName(String.valueOf(document.get("name").toString()));
+                dto.setContactNumber(String.valueOf(document.get("contactNumber").toString()));
+                dto.setLastPositionTime(String.valueOf(document.get("lastPositionTime")));
+                dto.setAmbulanceCharge(String.valueOf(document.get("ambulanceCharge").toString()));
                 HashMap<String,Object> geopoint= (HashMap<String, Object>) document.get("driverCurrentPosition");
-                GeoPoint point= (GeoPoint) geopoint.get("geopoint");
-                dto.setLatitude(point.getLatitude());
-                dto.setLongitude(point.getLongitude());
-                dto.setLongitude(point.getLongitude());
-                dto.setIsFree(document.get("isFree").toString());
-                dto.setEmail(document.get("email").toString());
+                if (geopoint!=null){
+                    GeoPoint point= (GeoPoint) geopoint.get("geopoint");
+                    if(point!=null){
+                        dto.setLatitude(point.getLatitude());
+                        dto.setLongitude(point.getLongitude());
+                    }
+                }
+                dto.setFree(Boolean.parseBoolean(String.valueOf(document.get("isFree"))));
+                dto.setEmail(String.valueOf(document.get("email").toString()));
                 return dto;
             }
         } catch (InterruptedException  | ExecutionException e) {
             logger.info("Can not retrieve ambulance ");
         }
-
         return null;
-
     }
 
     public boolean editAmbulance(AmbulanceDTO dto){
