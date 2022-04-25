@@ -26,7 +26,7 @@ public class AmbulanceService {
         UserRecord.CreateRequest req = new UserRecord.CreateRequest();
         req.setEmail(dto.getEmail());
         req.setPassword(dto.getPassword());
-        dto.setStatus("Activate");
+        dto.setStatus("deactive");
         dto.setFree(true);
         try {
             UserRecord user = FirebaseAuth.getInstance().createUser(req);
